@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ Rituel Al-Latīf - 21 Jours</title>
+    <style>
+        :root {
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #2c3e50;
+            --primary: #27ae60;
+            --accent: #16a085;
+            --border: #e2e8f0;
+            --danger: #c0392b;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        header h1 { margin: 0; font-size: 2rem; letter-spacing: 1px; }
+        header p { margin: 10px 0 0 0; opacity: 0.9; font-style: italic; }
+
+        .stats-box {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .stat-item h3 { margin: 0; color: var(--accent); font-size: 1.5rem; }
+        .stat-item p { margin: 5px 0 0 0; font-size: 0.9rem; color: #7f8c8d; }
+
+        .warning-box {
+            background: #fdf2f2;
+            border-left: 4px solid var(--danger);
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+        }
+        .warning-box h4 { margin: 0 0 5px 0; color: var(--danger); }
+        .warning-box ul { margin: 0; padding-left: 20px; color: #555; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .day-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .day-card.completed {
+            border-color: var(--primary);
+            background-color: #f0f9f4;
+        }
+
+        .day-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .day-date {
+            font-size: 0.85rem;
+            color: #95a5a6;
+            margin-bottom: 15px;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 0.95rem;
+            user-select: none;
+            padding-top: 10px;
+            border-top: 1px dashed var(--border);
+        }
+
+        .checkbox-container input {
+            display: none;
+        }
+
+        .checkmark {
+            height: 20px;
+            width: 20px;
+            border: 2px solid #bdc3c7;
+            border-radius: 6px;
+            margin-right: 10px;
+            display: inline-block;
+            position: relative;
+            transition: all 0.2s;
+        }
+
+        .checkbox-container input:checked ~ .checkmark {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .checkbox-container input:checked ~ .checkmark:after {
+            content: "";
+            position: absolute;
+            left: 6px;
+            top: 2px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        .quote {
+            text-align: center;
+            font-style: italic;
+            color: #7f8c8d;
+            margin-top: 20px;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>🛡️ LE SECRET D'AL-LATĪF</h1>
+        <p>"Tu sèmes la graine, mais c'est Lui qui choisit le moment de la récolte."</p>
+    </header>
+
+    <div class="stats-box">
+        <div class="stat-item">
+            <h3 id="days-count">0 / 21</h3>
+            <p>Jours Validés</p>
+        </div>
+        <div class="stat-item">
+            <h3 id="zikr-count">0</h3>
+            <p>Invocations Totales</p>
+        </div>
+        <div class="stat-item">
+            <h3>903</h3>
+            <p>Par soir (Maghreb)</p>
+        </div>
+    </div>
+
+    <div class="warning-box">
+        <h4>⚠️ Vigilance d'Al-Latīf durant le cycle :</h4>
+        <ul>
+            <li>Garder le secret absolu sur ce rituel et ton chiffre.</li>
+            <li>Bannir la colère, la dureté envers ton épouse et la médisance.</li>
+            <li>Incarner la douceur pure tout au long de tes journées.</li>
+        </ul>
+    </div>
+
+    <div class="grid" id="calendar-grid"></div>
+
+    <div class="quote">
+        « Dans le secret du soir, la douceur prépare le terrain de la puissance. »
+    </div>
+</div>
+
+<script>
+    const totalJours = 21;
+    const zikrParJour = 903;
+    
+    // Génération des dates à partir du Dimanche 19 Juillet 2026
+    const startDate = new Date(2026, 6, 19); // Note: Mois 0-indexed, 6 = Juillet
+    const joursSemaine = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
+    const moisAnnee = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
+
+    const grid = document.getElementById('calendar-grid');
+
+    // Charger l'état sauvegardé
+    let progress = JSON.parse(localStorage.getItem('latif_progress')) || {};
+
+    for (let i = 1; i <= totalJours; i++) {
+        let currentDayDate = new Date(startDate);
+        currentDayDate.setDate(startDate.getDate() + (i - 1));
+
+        let nomJour = joursSemaine[currentDayDate.getDay()];
+        let jourMois = currentDayDate.getDate();
+        let nomMois = moisAnnee[currentDayDate.getMonth()];
+        let annee = currentDayDate.getFullYear();
+
+        let dateString = `${nomJour} ${jourMois} ${nomMois} ${annee}`;
+
+        const card = document.createElement('div');
+        card.className = `day-card ${progress[i] ? 'completed' : ''}`;
+        card.id = `card-${i}`;
+
+        card.innerHTML = `
+            <div>
+                <div class="day-title">Jour ${i}</div>
+                <div class="day-date">${dateString}</div>
+            </div>
+            <label class="checkbox-container">
+                <input type="checkbox" id="chk-${i}" ${progress[i] ? 'checked' : ''} onchange="toggleDay(${i})">
+                <span class="checkmark"></span>
+                Validé
+            </label>
+        `;
+        grid.appendChild(card);
+    }
+
+    function toggleDay(dayNumber) {
+        const checkbox = document.getElementById(`chk-${dayNumber}`);
+        const card = document.getElementById(`card-${dayNumber}`);
+        
+        if (checkbox.checked) {
+            card.classList.add('completed');
+            progress[dayNumber] = true;
+        } else {
+            card.classList.remove('completed');
+            delete progress[dayNumber];
+        }
+        
+        localStorage.setItem('latif_progress', JSON.stringify(progress));
+        updateStats();
+    }
+
+    function updateStats() {
+        const count = Object.keys(progress).length;
+        document.getElementById('days-count').innerText = `${count} / ${totalJours}`;
+        document.getElementById('zikr-count').innerText = (count * zikrParJour).toLocaleString();
+    }
+
+    // Initialisation des stats au chargement
+    updateStats();
+</script>
+
+</body>
+</html>
